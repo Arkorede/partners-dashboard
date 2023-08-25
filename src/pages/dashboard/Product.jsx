@@ -9,10 +9,16 @@ import DataTable from "react-data-table-component";
 import Checkbox3 from "./checkbox3/Checkbox3";
 import TripleItem3 from "./dropdown/TripleItem3";
 import PartnerModal from "./modal/PartnerModal";
+import { useSelector } from 'react-redux';
+
 
 export default function Product() {
   const [modalOn, setModalOn] = useState(false);
   const [choice, setChoice] = useState(false);
+
+
+  // const { listLoan } = useSelector((state) => state.loanReducer);
+  // console.log(listLoan)
 
   // const clicked = () => {
   //   setModalOn(true);
@@ -329,7 +335,7 @@ export default function Product() {
                                   </p>
                                   <label
                                     htmlFor="file-upload"
-                                    class="cursor-pointer pl-1 text-xs font-semibold text-[#8003CD] focus-within:outline-none leading-[20px]"
+                                    className="cursor-pointer pl-1 text-xs font-semibold text-[#8003CD] focus-within:outline-none leading-[20px]"
                                   >
                                     <span>browse</span>
                                     <input
@@ -357,7 +363,7 @@ export default function Product() {
                                   </p>
                                   <label
                                     htmlFor="file-upload"
-                                    class="cursor-pointer pl-1 text-xs font-semibold text-[#8003CD] focus-within:outline-none leading-[20px]"
+                                    className="cursor-pointer pl-1 text-xs font-semibold text-[#8003CD] focus-within:outline-none leading-[20px]"
                                   >
                                     <span>browse</span>
                                     <input

@@ -40,6 +40,7 @@ export default function Login() {
   const handleChange = (e) => {
     let { name, value } = e.target;
     setState({ ...state, [name]: value });
+    console.log()
   };
 
   return (

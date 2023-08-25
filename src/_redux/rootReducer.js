@@ -1,9 +1,11 @@
 import { combineReducers } from "redux";
-import { authReducer, roleReducer } from "./reducers";
+import { authReducer, roleReducer,loanReducer,listLoanReducer } from "./reducers";
 
 const rootReducer = combineReducers({
   authReducer,
-  roleReducer
+  roleReducer,
+  loanReducer,
+  listLoanReducer
 });
 
 export default rootReducer;
