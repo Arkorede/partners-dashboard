@@ -4,7 +4,7 @@ import React from 'react';
 // const token = localStorage.getItem('access_token');
 
 const instance = axios.create({
-  baseURL: 'http://cred-bevy-api-env-1.eba-6rhxrtvp.eu-north-1.elasticbeanstalk.com/',
+  baseURL: 'https://api.credbevy.com',
   headers: {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${localStorage.getItem('access_token')}`

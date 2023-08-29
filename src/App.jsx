@@ -17,19 +17,19 @@ function App() {
     // <Router>
     <Routes>
       <Route exact path="/" element={<Login />} />
-      {/* <Route element={<PrivateRoutes />}> */}
-      <Route path="/" element={<Layout />}>
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="wallet" element={<Wallet />} />
-        <Route path="loanproducts" element={<LoanProducts />} />
-        <Route path="loanproducts/product" element={<Product />} />
-        <Route path="loanrequest" element={<LoanRequest />} />
-        <Route path="loanrequest/:id" element={<RequestDetails />} />
-        <Route path="loanhistory" element={<LoanHistory />} />
-        <Route path="integrations" element={<Integrations />} />
-        <Route path="settings" element={<Settings />} />
+      <Route element={<PrivateRoutes />}>
+        <Route path="/" element={<Layout />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="wallet" element={<Wallet />} />
+          <Route path="loanproducts" element={<LoanProducts />} />
+          <Route path="loanproducts/product" element={<Product />} />
+          <Route path="loanrequest" element={<LoanRequest />} />
+          <Route path="loanrequest/:id" element={<RequestDetails />} />
+          <Route path="loanhistory" element={<LoanHistory />} />
+          <Route path="integrations" element={<Integrations />} />
+          <Route path="settings" element={<Settings />} />
+        </Route>
       </Route>
-      {/* </Route> */}
     </Routes>
     // </Router>
   );

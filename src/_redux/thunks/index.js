@@ -1,4 +1,4 @@
-import { loginSuccess, loginFailure, logoutSuccess, logoutFailure, listRolesSuccess, listRolesFailure } from "../../_actions";
+import { loginSuccess, loginFailure, logoutSuccess, logoutFailure, listRolesSuccess, listRolesFailure, createUserStart, createUserSuccess, createUserFailure } from "../../_actions";
 import axios from 'axios';
 import api from './../../axios/api';
 
@@ -49,29 +49,19 @@ export const logout = () => {
   }
 };
 
-export const createUser = (firstName, lastName) => {
+export const createUser = (firstName, lastName, username, address, email, password, roles) => {
   return async (dispatch) => {
     try {
-      const response = await fetch('http://credbevy-env.eba-nsfp43cc.us-east-1.elasticbeanstalk.com/api/partner/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+      const response = await api.post('/api/partner/account/create', {
+        firstName, lastName, username, address, email, password, roles
       });
 
-      if (!response.ok) {
-        throw new Error('Login failed');
-      }
+      const data = response.data;
+      console.log(data)
 
-      const data = await response.json();
-      console.log('logged in');
-
-      dispatch(loginSuccess(data.access_token));
-
-      console.log(response);
-      console.log(data);
+      dispatch(createUserSuccess(data.partner));
     } catch (error) {
-      dispatch(loginFailure(error.message))
-      console.log(error)
+      dispatch(createUserFailure(error.message))
     }
   }
 };

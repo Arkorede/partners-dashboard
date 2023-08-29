@@ -4,7 +4,7 @@ const initialState = {
   partnerUser: null,
   currentUser: null,
   error: null,
-  roles: []
+  // roles: []
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -17,6 +17,14 @@ export const authReducer = (state = initialState, action) => {
       return { ...state, currentUser: null, error: null };
     case LOGOUT_FAILURE:
       return { ...state, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+
+export const createReducer = (state = initialState, action) => {
+  switch (action.type) {
     case CREATE_USER_START:
       return { ...state }
     case CREATE_USER_SUCCESS:
@@ -26,7 +34,7 @@ export const authReducer = (state = initialState, action) => {
     default:
       return state;
   }
-};
+}
 
 // export const roleReducer = (state = [], action) => {
 //   const { type, payload } = action;

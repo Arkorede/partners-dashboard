@@ -4,77 +4,19 @@ import clear from "../img/clear.png";
 import caret from "../img/caret.png";
 import { AiFillCaretDown } from "react-icons/ai";
 import Caret from "../dropdown/Caret";
-import SuperAdmin from "../role/SuperAdmin";
-import Contributor from "../role/Contributor";
 import Select, { components } from "react-select";
-import { listRoles } from "../../../_redux/thunks";
+import { createUser } from "../../../_redux/thunks";
 import { useSelector, useDispatch } from "react-redux";
-// import { GetStyles } from "react-select";
 
-export default function UserModal({ setUserModalOn, setUserChoice }) {
-  const handleProceedClick = () => {
-    setUserModalOn(false);
-    setUserChoice(true);
-  };
-
+export default function UserModal({ setUserModalOn }) {
   const handleCancelClick = () => {
     setUserModalOn(false);
-    setUserChoice(false);
-  };
-
-  const [rolesOn, setRolesOn] = useState(false);
-
-  const [adminOn, setAdminOn] = useState(false);
-  const [contributorOn, setContributorOn] = useState(false);
-
-  const [selects, setSelects] = useState();
-
-  const dispatch = useDispatch();
-
-  const { roles } = useSelector((state) => state.roleReducer);
-
-  // console.log({ roles });
-  const handleRoles = () => {
-    dispatch(listRoles());
-    console.log("roles");
-  };
-
-  const handleAdmin = () => {
-    setAdminOn(true);
-    // setRolesOn(true);
-  };
-
-  const handleContributor = () => {
-    setContributorOn(true);
-  };
-
-  const handleCancelRole = () => {
-    setAdminOn(false);
-    setContributorOn(false);
   };
 
   const options = [
-    { value: "", label: "grace" },
-    { value: "", label: "love" },
+    { value: "Super Admin", label: "Super Admin" },
+    { value: "Contributor", label: "Contributor" },
   ];
-
-  // const getStyles = {
-  //   control: (base, state) => ({
-  //     ...base,
-  //     borderColor: state.isFocused ? "#00B8D9" : "#ccc",
-  //     boxShadow: state.isFocused ? "0 0 0 1px #00B8D9" : null,
-  //     "&:hover": {
-  //       borderColor: state.isFocused ? "#00B8D9" : "#ccc",
-  //     },
-  //   }),
-  //   dropdownIndicator: (base, state) => ({
-  //     ...base,
-  //     color: state.isFocused ? "#00B8D9" : "#ccc",
-  //     "&:hover": {
-  //       color: state.isFocused ? "#00B8D9" : "#ccc",
-  //     },
-  //   }),
-  // };
 
   const DropdownIndicator = (props) => {
     return (
@@ -88,21 +30,69 @@ export default function UserModal({ setUserModalOn, setUserChoice }) {
     DropdownIndicator,
   };
 
-  // const dropdownRef = useRef();
+  const [selectedValues, setSelectedValues] = useState([]);
 
-  // useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-  //       setRolesOn(false);
-  //     }
-  //   };
+  const handleOptionChange = (selectedOption) => {
+    const newSelectedValues = selectedOption.map((option) => option.value);
+    setSelectedValues(newSelectedValues);
+    console.log(`Selected Values:`, newSelectedValues);
+  };
 
-  //   document.addEventListener("click", handleClickOutside);
+  const [state, setState] = useState({
+    firstName: "",
+    lastName: "",
+    username: "",
+    address: "",
+    email: "",
+    password: "",
+    roles: [],
+  });
 
-  //   return () => {
-  //     document.removeEventListener("click", handleClickOutside);
-  //   };
-  // }, [dropdownRef]);
+  const { firstName, lastName, username, address, email, password, roles } =
+    state;
+
+  const { partnerUser } = useSelector((state) => state.createReducer);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (partnerUser) {
+      console.log("peaccc");
+    }
+  }, [partnerUser]);
+
+  const handleValidate = (e) => {
+    e.preventDefault();
+    if (
+      !firstName ||
+      !lastName ||
+      !username ||
+      !address ||
+      !email ||
+      !password ||
+      !roles
+    ) {
+      // console.log("Create User");
+      return;
+    }
+    dispatch(
+      createUser(firstName, lastName, username, address, email, password, roles)
+    );
+    setState({
+      firstName: "",
+      lastName: "",
+      username: "",
+      address: "",
+      email: "",
+      password: "",
+      roles: [],
+    });
+  };
+
+  const handleChange = (e) => {
+    let { name, value } = e.target;
+    setState({ ...state, [name]: value });
+  };
 
   return (
     <div className="">
@@ -130,7 +120,7 @@ export default function UserModal({ setUserModalOn, setUserChoice }) {
                 </div>
 
                 <div className="">
-                  <form action="#" method="#" className="">
+                  <form className="" onSubmit={handleValidate}>
                     <div className="px-8">
                       <p className="my-6 text-lg font-bold">Details</p>
                       <div className="">
@@ -147,6 +137,7 @@ export default function UserModal({ setUserModalOn, setUserChoice }) {
                               name="first-name"
                               id="first-name"
                               autoComplete="first-name"
+                              onChange={handleChange}
                               class="block w-full font-normal rounded border border-solid border-[#DCDCE4] px-4 py-1.5 text-sm sm:leading-6 outline-none"
                               aria-required
                             />
@@ -163,6 +154,7 @@ export default function UserModal({ setUserModalOn, setUserChoice }) {
                               name="last-name"
                               id="last-name"
                               autoComplete="last-name"
+                              onChange={handleChange}
                               className="block w-full font-normal rounded border border-solid border-[#DCDCE4] px-4 py-1.5 text-sm sm:leading-6 outline-none"
                               required
                             />
@@ -179,6 +171,7 @@ export default function UserModal({ setUserModalOn, setUserChoice }) {
                               name="user-name"
                               id="user-name"
                               autoComplete="user-name"
+                              onChange={handleChange}
                               className="block w-full font-normal rounded border border-solid border-[#DCDCE4] px-4 py-1.5 text-sm sm:leading-6 outline-none"
                               required
                             />
@@ -195,6 +188,7 @@ export default function UserModal({ setUserModalOn, setUserChoice }) {
                               name="address"
                               id="address"
                               autoComplete="given-address"
+                              onChange={handleChange}
                               className="block w-full font-normal rounded border border-solid border-[#DCDCE4] px-4 py-1.5 text-sm sm:leading-6 outline-none"
                             />
                           </div>
@@ -210,6 +204,7 @@ export default function UserModal({ setUserModalOn, setUserChoice }) {
                               name="email"
                               id="email"
                               autoComplete="given-email"
+                              onChange={handleChange}
                               className="block w-full font-normal rounded border border-solid border-[#DCDCE4] px-4 py-1.5 text-sm sm:leading-6 outline-none"
                             />
                           </div>
@@ -225,36 +220,56 @@ export default function UserModal({ setUserModalOn, setUserChoice }) {
                               name="password"
                               id="password"
                               autoComplete="password"
+                              onChange={handleChange}
                               className="block w-full font-normal rounded border border-solid border-[#DCDCE4] px-4 py-1.5 text-sm sm:leading-6 outline-none"
                             />
+                          </div>
+                          <div className="col-span-6 sm:col-span-3">
+                            <p className="text-xs font-bold leading-4">
+                              User’s roles
+                            </p>
+                            <Select
+                              isMulti
+                              // value={selectedValues}
+                              onChange={handleOptionChange}
+                              options={options}
+                              unstyled
+                              classNames={{
+                                control: () =>
+                                  "border rounded border-[#DCDCE4] hover:cursor-pointer",
+                                placeholder: () => "pl-4 text-sm",
+                                input: () => "px-4 py-1",
+                                valueContainer: () => "p-1 gap-[3px]",
+                                singleValue: () => "",
+                                option: () =>
+                                  "bg-white pl-3 py-2 text-xs hover:bg-[#F0F0FF] hover:cursor-pointer",
+                                multiValue: () =>
+                                  "bg-[#F0F0FF] text-xs text-primary font-bold leading-4 border px-3 py-2 rounded",
+                                noOptionsMessage: () => "bg-white",
+                                dropdownIndicator: () => "pr-4",
+                              }}
+                              components={customComponents}
+                              // onMenuOpen={handleRoles}
+                            />
+                            <p className="font-normal text-xs text-[#8A8B9F]">
+                              A user can have one or several roles
+                            </p>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div className="ml-8 mt-[34px]">
-                      <p className="text-xs font-bold leading-4">
-                        User’s roles
-                      </p>
-                      <Select
-                        isMulti
-                        options={options}
-                        components={customComponents}
-                        onMenuOpen={handleRoles}
-                      />
-                      <p className="font-normal text-xs text-[#8A8B9F]">
-                        A user can have one or several roles
-                      </p>
-                    </div>
-                    <div className="flex h-14 bg-[#F6F6F6] px-8 py-4 justify-between mt-[73px] justify-center items-center">
+
+                    <div className="flex h-14 bg-[#F6F6F6] px-8 py-4 justify-between mt-[85px] justify-center items-center">
                       <button
+                        type="button"
                         className="p-2 rounded text-xs font-bold border-[0.5px] border-solid border-[#DCDCE4] bg-white"
                         onClick={handleCancelClick}
                       >
                         Cancel
                       </button>
                       <button
+                        type="submit"
                         className="p-2 rounded text-xs font-bold bg-[#8003CD] text-white"
-                        onClick={handleProceedClick}
                       >
                         Invite user
                       </button>
