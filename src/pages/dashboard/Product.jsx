@@ -9,10 +9,16 @@ import DataTable from "react-data-table-component";
 import Checkbox3 from "./checkbox3/Checkbox3";
 import TripleItem3 from "./dropdown/TripleItem3";
 import PartnerModal from "./modal/PartnerModal";
+import { useSelector } from 'react-redux';
+
 
 export default function Product() {
   const [modalOn, setModalOn] = useState(false);
   const [choice, setChoice] = useState(false);
+
+
+  // const { listLoan } = useSelector((state) => state.loanReducer);
+  // console.log(listLoan)
 
   // const clicked = () => {
   //   setModalOn(true);
@@ -82,7 +88,7 @@ export default function Product() {
     {
       name: "Status",
       selector: (row) => (
-        <div className="flex gap-[90px] flex items-center justify-center gap-[55px]">
+        <div className="flex items-center justify-center gap-[55px]">
           <div className="flex items-center justify-center gap-2 px-4 py-1 bg-[#C2FED3] rounded-[1.875rem]">
             <div className="w-1.5 h-1.5 bg-[#42BE65] rounded-full"></div>
             <div className="text-[0.625rem] font-semibold">{row.status}</div>
@@ -329,7 +335,7 @@ export default function Product() {
                                   </p>
                                   <label
                                     htmlFor="file-upload"
-                                    class="cursor-pointer pl-1 text-xs font-semibold text-[#8003CD] focus-within:outline-none leading-[20px]"
+                                    className="cursor-pointer pl-1 text-xs font-semibold text-[#8003CD] focus-within:outline-none leading-[20px]"
                                   >
                                     <span>browse</span>
                                     <input
@@ -357,7 +363,7 @@ export default function Product() {
                                   </p>
                                   <label
                                     htmlFor="file-upload"
-                                    class="cursor-pointer pl-1 text-xs font-semibold text-[#8003CD] focus-within:outline-none leading-[20px]"
+                                    className="cursor-pointer pl-1 text-xs font-semibold text-[#8003CD] focus-within:outline-none leading-[20px]"
                                   >
                                     <span>browse</span>
                                     <input

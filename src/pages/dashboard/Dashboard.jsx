@@ -15,11 +15,22 @@ import { Label } from "recharts";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Naira from "react-naira";
 
+import { useSelector} from "react-redux";
+
+
 const Dashboard = () => {
+
+  // const data = useSelector((state)=>{
+  //   return state.currentUser
+  // })
+  
+  // console.log(data)
+
   return (
     <>
       {/* HEADING */}
       <div className=" h-full w-[1030px] pt-12 mx-5">
+        
         <span className="normal tracking-[-0.5px] font-[700] text-[#333333] h-[36] w-[175] text-[34px] font-[Manrope]">
           Dashboard
         </span>
