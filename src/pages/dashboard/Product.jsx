@@ -88,7 +88,7 @@ export default function Product() {
     {
       name: "Status",
       selector: (row) => (
-        <div className="flex gap-[90px] flex items-center justify-center gap-[55px]">
+        <div className="flex items-center justify-center gap-[55px]">
           <div className="flex items-center justify-center gap-2 px-4 py-1 bg-[#C2FED3] rounded-[1.875rem]">
             <div className="w-1.5 h-1.5 bg-[#42BE65] rounded-full"></div>
             <div className="text-[0.625rem] font-semibold">{row.status}</div>
