@@ -1,9 +1,70 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import amigos from "./img/amigos.png";
 import Checkbox1 from "./checkbox1/Checkbox1";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loan } from "../../_redux/thunks";
 
 const LoanProducts = () => {
+  const [state, setState] = useState({
+    product_name: "",
+    maximum_amount: "",
+    maximum_duration: "",
+    interest_rate: "",
+    discount: "",
+    discount_duration: "",
+    // loan_requirements: "",
+  });
+
+  const {
+    product_name,
+    maximum_amount,
+    maximum_duration,
+    interest_rate,
+    discount,
+    discount_duration,
+    // loan_requirements,
+  } = state;
+
+  // const { currentLoan } = useSelector((state) => state.loanReducer);
+
+  // useEffect(() => {
+  //   if (currentLoan) {
+  //     alert("Loan Created");
+  //   }
+  // }, [currentLoan]);
+
+  const dispatch = useDispatch();
+
+  const handleSubmit = (e) => {
+    dispatch(
+      loan(
+        product_name,
+        maximum_amount,
+        maximum_duration,
+        interest_rate,
+        discount,
+        discount_duration,
+        // loan_requirements
+      )
+    );
+    setState({
+      product_name: "",
+      maximum_amount: "",
+      maximum_duration: "",
+      interest_rate: "",
+      discount: "",
+      discount_duration: "",
+      // loan_requirements: "",
+    });
+  };
+
+  const handleChange = (e) => {
+    let { name, value } = e.target;
+    setState({ ...state, [name]: value });
+    console.log('input');
+  };
+
   const [showFirstDiv, setShowFirsttDiv] = useState(true);
 
   const handleButtonClick = () => {
@@ -62,7 +123,9 @@ const LoanProducts = () => {
                   </label>
                   <input
                     type="text"
-                    name="product-name"
+                    name="product_name"
+                    value={product_name}
+                    onChange={handleChange}
                     id="product-name"
                     autoComplete="product-name"
                     class="block w-full font-normal placeholder:text-[#333333] placeholder:font-normal rounded border border-solid border-[#DCDCE4] px-4 py-1.5 text-sm sm:leading-6 outline-none"
@@ -79,7 +142,9 @@ const LoanProducts = () => {
                   </label>
                   <input
                     type="text"
-                    name="amount"
+                    name="maximum_amount"
+                    value={maximum_amount}
+                    onChange={handleChange}
                     id="amount"
                     autoComplete="amount"
                     className="block w-full placeholder:text-[#333333] placeholder:font-normal font-normal rounded border border-solid border-[#DCDCE4] px-4 py-1.5 text-sm sm:leading-6 outline-none"
@@ -96,8 +161,10 @@ const LoanProducts = () => {
                   </label>
                   <input
                     type="text"
-                    name="duration"
+                    name="maximum_duration"
                     id="duration"
+                    value={maximum_duration}
+                    onChange={handleChange}
                     autoComplete="duration"
                     className="block w-full font-normal placeholder:text-[#333333] placeholder:font-normal rounded border border-solid border-[#DCDCE4] px-4 py-1.5 text-sm sm:leading-6 outline-none"
                     placeholder="9 Months"
@@ -113,7 +180,9 @@ const LoanProducts = () => {
                   </label>
                   <input
                     type="text"
-                    name="interest-rate"
+                    name="interest_rate"
+                    value={interest_rate}
+                    onChange={handleChange}
                     id="interest-rate"
                     autoComplete="given-interest-rate"
                     placeholder="30%"
@@ -158,6 +227,8 @@ const LoanProducts = () => {
                     type="text"
                     name="discount"
                     id="discount"
+                    value={discount}
+                    onChange={handleChange}
                     autoComplete="discount"
                     class="block w-full font-normal placeholder:text-[#333333] placeholder:font-normal rounded border border-solid border-[#DCDCE4] px-4 py-1.5 text-sm sm:leading-6 outline-none"
                     placeholder="10%"
@@ -173,7 +244,9 @@ const LoanProducts = () => {
                   </label>
                   <input
                     type="text"
-                    name="duration"
+                    name="discount_duration"
+                    value={discount_duration}
+                    onChange={handleChange}
                     id="duration"
                     autoComplete="duration"
                     className="block w-full font-normal rounded border border-solid border-[#DCDCE4] px-4 py-1.5 text-xs sm:leading-6 outline-none"
@@ -187,7 +260,8 @@ const LoanProducts = () => {
           <div className="mt-8 mb-8 flex justify-end w-[867px]">
             <button
               className="font-bold text-xs text-white p-2.5 bg-[#8003CD] rounded"
-              onClick={handleViewProduct}
+              // onClick={handleViewProduct}
+              onClick={handleSubmit}
             >
               Add Product
             </button>

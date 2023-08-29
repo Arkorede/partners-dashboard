@@ -1,10 +1,33 @@
-import { LOGIN_FAILURE, LOGIN_SUCCESS, LOGOUT_SUCCESS, LOGOUT_FAILURE, CREATE_USER_START, CREATE_USER_SUCCESS, CREATE_USER_FAILURE, LIST_ROLES_START, LIST_ROLES_SUCCESS, LIST_ROLES_FAILURE } from "../../_actions";
+import {
+  LOGIN_FAILURE,
+  LOGIN_SUCCESS,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAILURE,
+  CREATE_USER_START,
+  CREATE_USER_SUCCESS,
+  CREATE_USER_FAILURE,
+  LIST_ROLES_START,
+  LIST_ROLES_SUCCESS,
+  LIST_ROLES_FAILURE,
+  CREATE_LOAN_SUCCESS,
+  CREATE_LOAN_FAILURE,
+  LIST_LOAN_REQUEST,
+  LIST_LOAN_SUCCESS,
+  LIST_LOAN_FAILURE,
+} from "../../_actions";
 
 const initialState = {
   partnerUser: null,
   currentUser: null,
+  currentLoan: null,
+  listLoan: [],
   error: null,
+<<<<<<< HEAD
   // roles: []
+=======
+  roles: [],
+  loading: false,
+>>>>>>> 2602306abbd0313ccf744347696f3e174ca5bd26
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -26,11 +49,11 @@ export const authReducer = (state = initialState, action) => {
 export const createReducer = (state = initialState, action) => {
   switch (action.type) {
     case CREATE_USER_START:
-      return { ...state }
+      return { ...state };
     case CREATE_USER_SUCCESS:
       return { ...state, partnerUser: action.payload, error: null };
     case CREATE_USER_FAILURE:
-      return { ...state, partnerUser: null, error: action.payload }
+      return { ...state, partnerUser: null, error: action.payload };
     default:
       return state;
   }
@@ -52,12 +75,36 @@ export const createReducer = (state = initialState, action) => {
 export const roleReducer = (state = initialState, action) => {
   switch (action.type) {
     case LIST_ROLES_START:
-      return { ...state }
+      return { ...state };
     case LIST_ROLES_SUCCESS:
-      return { ...state, roles: action.payload, error: null }
+      return { ...state, roles: action.payload, error: null };
     case LIST_ROLES_FAILURE:
-      return { ...state, roles: null, error: action.payload }
+      return { ...state, roles: null, error: action.payload };
     default:
       return state;
   }
-}
+};
+
+export const loanReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case CREATE_LOAN_SUCCESS:
+      return { ...state, currentLoan: action.payload, error: null };
+    case CREATE_LOAN_FAILURE:
+      return { ...state, currentLoan: null, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const listLoanReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case LIST_LOAN_REQUEST:
+      return { ...state, loading:true, error: null };
+    case LIST_LOAN_SUCCESS:
+      return { ...state, listLoan: action.payload, error: null };
+    case LIST_LOAN_FAILURE:
+      return { ...state, listLoan: null, error: action.payload };
+    default:
+      return state;
+  }
+};
